@@ -32,6 +32,8 @@ drat:::add("traitecoevo")
 install.packages("baad.data")
 ```
 
+(versions of R before 3.2.0 may require `install.packages("baad.data", type="source")` here)
+
 **Option 2, using `devtools::install_github`**
 
 (install `devtools` with `install.packages("devtools")`)
