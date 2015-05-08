@@ -19,6 +19,8 @@ test_that("ecology version", {
   expect_that(d, is_a("list"))
   expect_that(d$data, is_a("data.frame"))
 
+  expect_that(baad.data:::data(), is_identical_to(d))
+
   expect_that("ecology" %in% baad_versions("local"), is_true())
 
   v <- baad_versions("github")

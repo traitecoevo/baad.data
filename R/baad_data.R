@@ -25,6 +25,10 @@ baad_data <- function(version="ecology") {
   baad_storr()$get(version)
 }
 
+data <- function(...) {
+  baad_data(...)
+}
+
 ##' @export
 ##' @rdname baad_data
 baad_delete <- function(version=NULL) {
