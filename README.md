@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/traitecoevo/baad.data.png?branch=master)](https://travis-ci.org/traitecoevo/baad.data)
 
+![baad logo](https://github.com/dfalster/baad/raw/master/extra/baad.png)
+
+Please see [the main baad repo](https://github.com/dfalster/baad) for more information about baad; this repo and package is a simple tool to access the data there.
+
 # Usage:
 
 
