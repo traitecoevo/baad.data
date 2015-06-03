@@ -60,7 +60,7 @@ install.packages("baad.data")
 (install `devtools` with `install.packages("devtools")`)
 
 ```r
-devtools::install_github(c("richfitz/storr", "traitecoevo/baad"))
+devtools::install_github(c("richfitz/storr", "traitecoevo/baad.data"))
 ```
 
 ## Acknowledgements
