@@ -19,12 +19,6 @@ Then access the data with:
 head(baad$data)
 ```
 
-or
-
-```
-head(baad.data:::data())
-```
-
 To download a specific version:
 
 ```r

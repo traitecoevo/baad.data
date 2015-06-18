@@ -1,98 +1,64 @@
 ##' Load the baad database.
 ##'
 ##' The first time this is run for a given version, this function will
-##' download the baad database, either from the Ecology website (with
-##' version "ecology" or from github (numbered versions), unpack the
-##' resulting zip file and load the csv files.  This might take a few
-##' seconds to a minute.  Subsequent calls will be considerably
-##' quicker because we cache both the downloaded data and the result
-##' of reading the csv.  Subsequent calls after \emph{that} will be
-##' essentially instantaneous.
+##' download the baad database from github, using numbered versions),
+##' unpack the resulting zip file and load the csv files.  This might
+##' take a few seconds to a minute.  Subsequent calls will be
+##' considerably quicker because we cache both the downloaded data and
+##' the result of reading the csv.  Subsequent calls after \emph{that}
+##' will be essentially instantaneous.
 ##'
 ##' The function \code{baad_delete} deletes all traces of downloaded
 ##' baad data if a version is not given, or a specific version if that
 ##' is listed.
 ##' @title Load the baad database
-##' @param version Version to load.  "ecology" the published verison.
-##' Other valid versions are "0.2.0", "0.9.0" and "1.0.0" which are
-##' stored on github.  The "1.0.0" release corresponds to the
-##' "ecology" release.
+##' @param version Version to load.  Verion "1.0.0" corresponds to the
+##'   version published in Ecology in 2015.  Other valid versions are
+##'   "0.1.0", "0.2.0" and "0.9.0" which are stored on github but are
+##'   of historical interest only.
 ##' @export
+##' @import storr
 ##' @examples
+##' \dontrun{
 ##' baad <- baad_data()
 ##' head(baad$data)
-baad_data <- function(version="ecology") {
-  baad_storr()$get(version)
+##' }
+baad_data <- function(version=NULL) {
+  github_release_storr_get(baad_data_info(), version)
 }
 
-data <- function(...) {
-  baad_data(...)
+baad_data_info <- function() {
+  github_release_storr_info("dfalster/baad",
+                            "baad_data.zip",
+                            baad_unpack)
+}
+
+## Below here are wrappers around the storr functions but with our
+## information object.  We could actually save baad_data_info() as
+## an *object* in the package, but I prefer this approach.
+
+##' @export
+##' @rdname baad_data
+##' @param type Type of version to return: options are "local"
+##'   (versions installed locally) or "github" (versions available on
+##'   github).  With any luck, "github" is a superset of "local".  For
+##'   \code{baad_data_version_current}, if "local" is given, but there
+##'   are no local versions, then we do check for the most recent
+##'   github version.
+baad_data_versions <- function(type="local") {
+  github_release_storr_versions(baad_data_info(), type)
 }
 
 ##' @export
 ##' @rdname baad_data
-baad_delete <- function(version=NULL) {
-  if (is.null(version)) {
-    unlink(baad_path(), recursive=TRUE)
-  } else {
-    baad_storr()$del(version)
-  }
+baad_data_version_current <- function(type="local") {
+  github_release_storr_version_current(baad_data_info(), type)
 }
 
-##' List known versions of the baad database.  The last version
-##' returned is most recent.
-##' @title BAAD version
-##' @param type Where to look for versions: options are \code{global},
-##' which checks github and includes the published \code{ecology}
-##' version, \code{github} which is the github releases only and
-##' \code{local} which is versions downloaded to this computer.
 ##' @export
-baad_versions <- function(type) {
-  v <- switch(
-    type,
-    global=c(baad_versions("github"), "ecology"),
-    github=storr::github_release_versions("dfalster/baad"),
-    local=baad_storr()$list(),
-    stop("Unknown type ", type))
-  baad_versions_sort(v)
-}
-
-## Sort the versions, but put "ecology" in approximately the right
-## place.  We'll make the github release 1.0.1 I think so that this is
-## sorts stably.
-baad_versions_sort <- function(v) {
-  vv <- v
-  vv[v == "ecology"] <- "1.0.0"
-  v[order(numeric_version(vv))]
-}
-
-##' @importFrom rappdirs user_data_dir
-baad_path <- function() {
-  rappdirs::user_data_dir("baad")
-}
-
-##' @importFrom storr storr
-baad_env <- new.env(parent=emptyenv())
-baad_storr <- function() {
-  ## Probably this pattern should be done with a storr too?
-  if (is.null(baad_env$baad)) {
-    baad_hook <- storr::fetch_hook_download(baad_url, baad_unpack)
-    dr <- storr::driver_external(storr::driver_rds(baad_path()), baad_hook)
-    baad_env$baad <- storr::storr(dr)
-  }
-  baad_env$baad
-}
-
-## Given a version, return the url for that resource:
-## (import httr here to force installation as it is only a Suggests of
-## storr).
-##' @importFrom httr GET
-baad_url <- function(version, namespace) {
-  if (version == "ecology") {
-    "http://www.esapubs.org/archive/ecol/E096/128/baad_data.zip"
-  } else {
-    storr::github_release_file("dfalster/baad", "baad_data.zip")(version)
-  }
+##' @rdname baad_data
+baad_data_del <- function(version) {
+  github_release_storr_del(baad_data_info(), version)
 }
 
 ## Given a filename corresponding to a downloaded resource, convert it
