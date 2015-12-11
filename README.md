@@ -49,12 +49,17 @@ install.packages("baad.data")
 
 (versions of R before 3.2.0 may require `install.packages("baad.data", type="source")` here)
 
+(not currently working!)
+
 **Option 2, using `devtools::install_github`**
 
 (install `devtools` with `install.packages("devtools")`)
 
 ```r
-devtools::install_github(c("richfitz/storr", "traitecoevo/baad.data"))
+devtools::install_github(c(
+    "richfitz/storr@refactor",
+    "richfitz/datastorr",
+    "traitecoevo/baad.data"))
 ```
 
 ## Acknowledgements

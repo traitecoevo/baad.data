@@ -17,20 +17,20 @@
 ##'   "0.1.0", "0.2.0" and "0.9.0" which are stored on github but are
 ##'   of historical interest only.
 ##' @export
-##' @import storr
 ##' @examples
 ##' \dontrun{
 ##' baad <- baad_data()
 ##' head(baad$data)
 ##' }
-baad_data <- function(version=NULL) {
-  github_release_storr_get(baad_data_info(), version)
+baad_data <- function(version=NULL, path=NULL) {
+  datastorr::github_release_get(baad_data_info(path), version)
 }
 
-baad_data_info <- function() {
-  github_release_storr_info("dfalster/baad",
-                            "baad_data.zip",
-                            baad_unpack)
+baad_data_info <- function(path=NULL) {
+  datastorr::github_release_info(repo="dfalster/baad",
+                                 filename="baad_data.zip",
+                                 read=baad_unpack,
+                                 path=path)
 }
 
 ## Below here are wrappers around the storr functions but with our
@@ -39,31 +39,34 @@ baad_data_info <- function() {
 
 ##' @export
 ##' @rdname baad_data
-##' @param type Type of version to return: options are "local"
-##'   (versions installed locally) or "github" (versions available on
-##'   github).  With any luck, "github" is a superset of "local".  For
-##'   \code{baad_data_version_current}, if "local" is given, but there
-##'   are no local versions, then we do check for the most recent
-##'   github version.
-baad_data_versions <- function(type="local") {
-  github_release_storr_versions(baad_data_info(), type)
+##' @param local Logical indicating if local or github versions should
+##'   be polled.  With any luck, \code{local=FALSE} is a superset of
+##'   \code{local=TRUE}.  For \code{mydata_version_current}, if
+##'   \code{TRUE}, but there are no local versions, then we do check
+##'   for the most recent github version.
+baad_data_versions <- function(local=TRUE, path=NULL) {
+  datastorr::github_release_versions(baad_data_info(path), local)
 }
 
 ##' @export
 ##' @rdname baad_data
-baad_data_version_current <- function(type="local") {
-  github_release_storr_version_current(baad_data_info(), type)
+baad_data_version_current <- function(local=TRUE, path=NULL) {
+  datastorr::github_release_version_current(baad_data_info(path), local)
 }
 
 ##' @export
 ##' @rdname baad_data
-baad_data_del <- function(version) {
-  github_release_storr_del(baad_data_info(), version)
+baad_data_del <- function(version, path) {
+  datastorr::github_release_del(baad_data_info(path), version)
+}
+
+baad_data_release <- function(description) {
+  datastorr::github_release_create(baad_data_info(path),
+                                   description=description, ...)
 }
 
 ## Given a filename corresponding to a downloaded resource, convert it
 ## into an R object.
-##' @importFrom bibtex read.bib
 baad_unpack <- function(filename) {
   dest <- tempfile()
   files <- unzip(filename, exdir=dest)
