@@ -57,7 +57,6 @@ install.packages("baad.data")
 
 ```r
 devtools::install_github(c(
-    "richfitz/storr@refactor",
     "richfitz/datastorr",
     "traitecoevo/baad.data"))
 ```
