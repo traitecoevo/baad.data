@@ -1,7 +1,7 @@
-##' Load the baad database.
+##' Load data from the Biomass and Allometry Database.
 ##'
 ##' The first time this is run for a given version, this function will
-##' download the baad database from github, using numbered versions),
+##' download the Biomass and Allometry Database (BAAD) from github, using numbered versions),
 ##' unpack the resulting zip file and load the csv files.  This might
 ##' take a few seconds to a minute.  Subsequent calls will be
 ##' considerably quicker because we cache both the downloaded data and
@@ -9,13 +9,15 @@
 ##' will be essentially instantaneous.
 ##'
 ##' The function \code{baad_delete} deletes all traces of downloaded
-##' baad data if a version is not given, or a specific version if that
+##' BAAD data if a version is not given, or a specific version if that
 ##' is listed.
-##' @title Load the baad database
+##' @title Load the BAAD database
 ##' @param version Version to load.  Verion "1.0.0" corresponds to the
 ##'   version published in Ecology in 2015.  Other valid versions are
 ##'   "0.1.0", "0.2.0" and "0.9.0" which are stored on github but are
 ##'   of historical interest only.
+##' @param path Optional path in which to store the data.  If omitted
+##'   we use \code{rappdirs} to generate a reasonable path.
 ##' @export
 ##' @examples
 ##' \dontrun{
@@ -26,6 +28,12 @@ baad_data <- function(version=NULL, path=NULL) {
   datastorr::github_release_get(baad_data_info(path), version)
 }
 
+##' Information to describe how to process github releases
+##'
+##' @title Github release information
+##'
+##' @param path Optional path in which to store the data.  If omitted
+##'   we use \code{rappdirs} to generate a reasonable path.
 baad_data_info <- function(path=NULL) {
   datastorr::github_release_info(repo="dfalster/baad",
                                  filename="baad_data.zip",
@@ -33,23 +41,23 @@ baad_data_info <- function(path=NULL) {
                                  path=path)
 }
 
-## Below here are wrappers around the storr functions but with our
-## information object.  We could actually save baad_data_info() as
-## an *object* in the package, but I prefer this approach.
-
+##' Get release versions
+##' @title Get release versions
+##' @param local Should we return local (TRUE) or github (FALSE)
+##'   version numbers?  Github version numbers are pulled once per
+##'   session only.  The exception is for
+##'   \code{github_release_version_current} which when given
+##'   \code{local=TRUE} will fall back on trying github if there are
+##'   no local versions.
+##' @param path Optional path in which to store the data.  If omitted
+##'   we use \code{rappdirs} to generate a reasonable path.##'
 ##' @export
-##' @rdname baad_data
-##' @param local Logical indicating if local or github versions should
-##'   be polled.  With any luck, \code{local=FALSE} is a superset of
-##'   \code{local=TRUE}.  For \code{mydata_version_current}, if
-##'   \code{TRUE}, but there are no local versions, then we do check
-##'   for the most recent github version.
 baad_data_versions <- function(local=TRUE, path=NULL) {
   datastorr::github_release_versions(baad_data_info(path), local)
 }
 
 ##' @export
-##' @rdname baad_data
+##' @rdname baad_data_versions
 baad_data_version_current <- function(local=TRUE, path=NULL) {
   datastorr::github_release_version_current(baad_data_info(path), local)
 }

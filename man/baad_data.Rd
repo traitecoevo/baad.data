@@ -3,15 +3,9 @@
 \name{baad_data}
 \alias{baad_data}
 \alias{baad_data_del}
-\alias{baad_data_version_current}
-\alias{baad_data_versions}
-\title{Load the baad database}
+\title{Load the BAAD database}
 \usage{
 baad_data(version = NULL, path = NULL)
-
-baad_data_versions(local = TRUE, path = NULL)
-
-baad_data_version_current(local = TRUE, path = NULL)
 
 baad_data_del(version, path)
 }
@@ -21,18 +15,15 @@ version published in Ecology in 2015.  Other valid versions are
 "0.1.0", "0.2.0" and "0.9.0" which are stored on github but are
 of historical interest only.}
 
-\item{local}{Logical indicating if local or github versions should
-be polled.  With any luck, \code{local=FALSE} is a superset of
-\code{local=TRUE}.  For \code{mydata_version_current}, if
-\code{TRUE}, but there are no local versions, then we do check
-for the most recent github version.}
+\item{path}{Optional path in which to store the data.  If omitted
+we use \code{rappdirs} to generate a reasonable path.}
 }
 \description{
-Load the baad database.
+Load data from the Biomass and Allometry Database.
 }
 \details{
 The first time this is run for a given version, this function will
-download the baad database from github, using numbered versions),
+download the Biomass and Allometry Database (BAAD) from github, using numbered versions),
 unpack the resulting zip file and load the csv files.  This might
 take a few seconds to a minute.  Subsequent calls will be
 considerably quicker because we cache both the downloaded data and
@@ -40,7 +31,7 @@ the result of reading the csv.  Subsequent calls after \emph{that}
 will be essentially instantaneous.
 
 The function \code{baad_delete} deletes all traces of downloaded
-baad data if a version is not given, or a specific version if that
+BAAD data if a version is not given, or a specific version if that
 is listed.
 }
 \examples{
