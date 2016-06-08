@@ -4,6 +4,10 @@ test_that("versions", {
   v <- baad_data_versions(FALSE)
   expect_true("1.0.0" %in% v)
   expect_equal(match("1.0.0", v), 4)
+
+  curr <- baad_data_version_current(FALSE)
+  expect_true(numeric_version(curr) >= numeric_version("1.0.0"))
+  expect_true(curr %in% v)
 })
 
 test_that("ecology version", {
@@ -30,6 +34,7 @@ test_that("ecology version", {
 
   expect_equal(baad_data_versions(TRUE, path),
               baad_data_versions(FALSE, path))
+
 
   baad_data_del("1.0.0", path)
   expect_false("1.0.0" %in% baad_data_versions(TRUE, path))
