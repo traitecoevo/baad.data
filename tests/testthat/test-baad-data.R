@@ -14,7 +14,8 @@ test_that("ecology version", {
   path <- tempfile()
   d <- baad_data("1.0.0", path)
   expect_equal(storr:::hash_object(d),
-               "7c59e15a5d56752775e8f8e9748e3556")
+               "XXX")
+  expect_is(d, "list")
   expect_is(d, "list")
   expect_is(d$data, "data.frame")
   expect_true(file.exists(path))
