@@ -13,9 +13,14 @@ test_that("versions", {
 test_that("ecology version", {
   path <- tempfile()
   d <- baad_data("1.0.0", path)
-  expect_equal(storr:::hash_object(d),
-               "XXX")
-  expect_is(d, "list")
+
+  # Note, checking data component here because entire objects
+  # was behaving differently on different platforms, due to
+  # presence of bad line endings.
+  # See https://github.com/traitecoevo/baad.data/issues/6
+  expect_equal(storr:::hash_object(d[["data"]]),
+               "16e346bcc5a49c10a3974b6ac149749f")
+
   expect_is(d, "list")
   expect_is(d$data, "data.frame")
   expect_true(file.exists(path))
