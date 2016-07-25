@@ -48,5 +48,6 @@ test_that("ecology version", {
   expect_false(file.exists(path))
 
   d <- baad_data("1.0.0")
-  cat(baad.data:::baad_data_info()$path)
+  path <- baad.data:::baad_data_info()$path
+  zip("../../baad.data.storr.zip", path)
 })

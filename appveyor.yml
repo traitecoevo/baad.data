@@ -16,6 +16,10 @@ test_script:
 on_failure:
   - travis-tool.sh dump_logs
 
+artifacts:
+  - path: baad.data.storr.zip
+    name: baad.data.storr
+
 environment:
   USE_RTOOLS: true
   R_VERSION: stable
