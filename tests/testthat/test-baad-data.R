@@ -13,8 +13,19 @@ test_that("versions", {
 test_that("ecology version", {
   path <- tempfile()
   d <- baad_data("1.0.0", path)
-  expect_equal(storr:::hash_object(d),
-               "7c59e15a5d56752775e8f8e9748e3556")
+
+  # Note, we are just checking the data component here,
+  # because the whole `data` object was behaving differently
+  # on different platforms, due to slightly different behaviours
+  # of bibtex package.
+  # In addition, we are taking has of data after calling `as.character(unlist`
+  # because appveyor gives different hash when NAs are present, even if
+  # other tests show contents as all.equal
+  # See https://github.com/traitecoevo/baad.data/issues/6
+
+  expect_equal(storr:::hash_object(as.character(unlist(d[["data"]]))),
+               "8a333e041a8c436d8d04e683dd6c2545")
+
   expect_is(d, "list")
   expect_is(d$data, "data.frame")
   expect_true(file.exists(path))
@@ -40,4 +51,9 @@ test_that("ecology version", {
   expect_false("1.0.0" %in% baad_data_versions(TRUE, path))
   baad_data_del(NULL, path)
   expect_false(file.exists(path))
+
+  d <- baad_data("1.0.0")
+  path <- file.path(getwd(), "baad_1.0.0.rds")
+  saveRDS(d, path)
+  expect_true(file.exists(path))
 })

@@ -16,6 +16,22 @@ test_script:
 on_failure:
   - travis-tool.sh dump_logs
 
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
+  - path: '*.Rcheck\tests\testthat\*.rds'
+    name: Products
+
 environment:
   USE_RTOOLS: true
   R_VERSION: stable
