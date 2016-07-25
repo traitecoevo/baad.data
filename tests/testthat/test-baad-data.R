@@ -48,6 +48,8 @@ test_that("ecology version", {
   expect_false(file.exists(path))
 
   d <- baad_data("1.0.0")
-  path <- baad.data:::baad_data_info()$path
-  zip("../../baad.data.storr.zip", path)
+  path <- rappdirs::user_data_dir(file.path("datastorr", "tmp.rds"))
+  saveRDS(d, path)
+  expect_true(file.exists(path))
+  cat(path)
 })

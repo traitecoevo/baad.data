@@ -17,8 +17,8 @@ on_failure:
   - travis-tool.sh dump_logs
 
 artifacts:
-  - path: baad.data.storr.zip
-    name: baad.data.storr
+  - path: C:\Users\appveyor\AppData\Local\datastorr\tmp.rds
+    name: baad_1.0.0.rds
 
 environment:
   USE_RTOOLS: true
