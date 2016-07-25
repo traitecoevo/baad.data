@@ -46,4 +46,7 @@ test_that("ecology version", {
   expect_false("1.0.0" %in% baad_data_versions(TRUE, path))
   baad_data_del(NULL, path)
   expect_false(file.exists(path))
+
+  d <- baad_data("1.0.0")
+  cat(baad.data:::baad_data_info()$path)
 })
