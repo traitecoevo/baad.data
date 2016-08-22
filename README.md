@@ -54,7 +54,7 @@ You can install the package from github using the devtools package:
 ```
 install.packages("devtools")
 devtools::install_github("richfitz/datastorr")
-devtools::install_github(""traitecoevo/baad.data")
+devtools::install_github("traitecoevo/baad.data")
 ```
 
 ## Contents of the BAAD
