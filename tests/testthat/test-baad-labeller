@@ -1,0 +1,43 @@
+dictionary <- baad.data::baad_data()$dictionary
+
+testthat::test_that("Returns expression",{
+
+
+    testthat::expect_equal(class(baad_labeller(dictionary = dictionary,
+                  variable = "r.st",
+                  as_expression = TRUE)),
+                  "expression")
+
+})
+
+testthat::test_that("Returns character",{
+
+
+    testthat::expect_equal(class(baad_labeller(dictionary = dictionary,
+                                               variable = "r.st",
+                                               as_expression = FALSE)),
+                           "character")
+
+})
+
+testthat::test_that("Returns expression with superscript",{
+
+
+    testthat::expect_equal(baad_labeller(dictionary = dictionary,
+                                               variable = "r.st",
+                                               as_expression = TRUE),
+                           return(expression(Wood~Density~(kg/m**3)))
+    )
+
+})
+
+
+testthat::test_that("Returns label with - for NA unit",{
+
+
+    testthat::expect_equal(baad_labeller(dictionary = dictionary,
+                                         variable = "pft",
+                                         as_expression = FALSE),
+                           "Pft (-)")
+
+})
