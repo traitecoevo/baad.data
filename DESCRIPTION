@@ -11,6 +11,9 @@ License: BSD_2_clause + file LICENSE
 LazyData: true
 Author: Daniel Falster, Rich FitzJohn
 Maintainer: Rich FitzJohn <rich.fitzjohn@gmail.com>
-Imports: datastorr (>= 0.0.3), bibtex
+Imports: 
+    datastorr (>= 0.0.3),
+    bibtex,
+    utils
 Suggests: testthat (>= 1.0.0)
 RoxygenNote: 5.0.1

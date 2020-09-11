@@ -1,6 +1,6 @@
 # baad.data
 
-[![Build Status](https://travis-ci.org/traitecoevo/baad.data.png?branch=master)](https://travis-ci.org/traitecoevo/baad.data)
+[![Build Status](https://travis-ci.org/the-Hull/baad.data.svg?branch=master)](https://travis-ci.org/the-Hull/baad.data)
 [![Build status](https://ci.appveyor.com/api/projects/status/7c5rt43610obsv5a?svg=true)](https://ci.appveyor.com/project/dfalster/baad-data)
 [![Coverage Status](https://coveralls.io/repos/github/traitecoevo/baad.data/badge.svg?branch=master)](https://coveralls.io/github/traitecoevo/baad.data?branch=master)
 

@@ -2,7 +2,7 @@
 #'
 #' @param dictionary data frame, from \code{\link{baad_data}()$dictionary}
 #' @param variable character, variable described in data dictionary
-#' @param as_expression logical, should label be returned as character string or expression?
+#' @param as_expression logical, should label be returned as character string or expression? (Defaults to \code{FALSE})
 #'
 #' @return Character string or expression. For expressions, units are returned with numeric superscripts
 #' @export

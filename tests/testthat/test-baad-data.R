@@ -12,18 +12,25 @@ test_that("versions", {
 
 test_that("ecology version", {
   path <- tempfile()
+  path_storr <- tempfile("storr_")
   d <- baad_data("1.0.0", path)
+  
+  # storrdriver <- storr::storr_rds(path_storr)
 
   # Note, we are just checking the data component here,
   # because the whole `data` object was behaving differently
   # on different platforms, due to slightly different behaviours
   # of bibtex package.
-  # In addition, we are taking has of data after calling `as.character(unlist`
+  # In addition, we are taking hash of data after calling `as.character(unlist`
   # because appveyor gives different hash when NAs are present, even if
   # other tests show contents as all.equal
   # See https://github.com/traitecoevo/baad.data/issues/6
 
-  expect_equal(storr:::hash_object(as.character(unlist(d[["data"]]))),
+  
+  # altered to other non-exported function, as storr::hash_object 
+  # seems to be added as different method (using storr drivers?)
+  hash_fun <- storr:::make_hash_serialized_object(hash_algorithm = "md5", skip_version = TRUE)
+  expect_equal(hash_fun(as.character(unlist(d[["data"]]))),
                "8a333e041a8c436d8d04e683dd6c2545")
 
   expect_is(d, "list")
