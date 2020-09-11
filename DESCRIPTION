@@ -15,5 +15,7 @@ Imports:
     datastorr (>= 0.0.3),
     bibtex,
     utils
-Suggests: testthat (>= 1.0.0)
+Suggests: 
+    testthat (>= 1.0.0),
+    storr
 RoxygenNote: 5.0.1

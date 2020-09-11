@@ -12,3 +12,6 @@ matrix:
 
 before_install:  
   - R -q -e 'install.packages("devtools"); devtools::install_github("richfitz/datastorr")'
+
+
+warnings_are_errors: false
