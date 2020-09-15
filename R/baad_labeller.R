@@ -34,7 +34,7 @@ baad_labeller <- function(dictionary, variable, as_expression = FALSE){
 
 
     label_string <- tools::toTitleCase(dictionary$label[dictionary$variable == variable])
-    if(nchar(label_string) == 0 ){
+    if(length(label_string) == 0 ){
         stop("Supplied variable not found in dictionary.")
     }
     if(is.na(label_string)){
