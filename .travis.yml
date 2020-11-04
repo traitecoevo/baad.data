@@ -1,27 +1,17 @@
-language: c
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+# added webhook
 
+language: r
 sudo: required
+cache: packages
 
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
+matrix:
+  include:
+   - r: release
+   - r: devel
 
-install:
-  - ./travis-tool.sh install_deps
-  - ./travis-tool.sh github_package richfitz/datastorr
-  - ./travis-tool.sh github_package jimhester/covr
+before_install:  
+  - R -q -e 'install.packages("devtools"); devtools::install_github("richfitz/datastorr")'
 
-script: ./travis-tool.sh run_tests
 
-after_success:
-  - Rscript -e 'library(covr); coveralls()'
-
-after_failure:
-  - ./travis-tool.sh dump_logs
-
-notifications:
-  email:
-    on_success: change
-    on_failure: change
-  slack: bdkd:vj80qn6ZugIB1Uh4p6MBrkVq
+warnings_are_errors: false

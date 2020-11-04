@@ -1,2 +1,5 @@
 ^\.travis\.yml$
 ^Makefile$
+^.*\.Rproj$
+^\.Rproj\.user$
+^baad\.data\.Rproj$

@@ -77,7 +77,7 @@ baad_data_release <- function(description) {
 ## into an R object.
 baad_unpack <- function(filename) {
   dest <- tempfile()
-  files <- unzip(filename, exdir=dest)
+  files <- utils::unzip(filename, exdir=dest)
 
   ## Some versions have a leading baad_data, while others don't,
   ## others are badly packaged.  This is terrible, and might get
@@ -90,7 +90,7 @@ baad_unpack <- function(filename) {
   }
 
   csv_files <- dir(dest, pattern="\\.csv$", full.names=TRUE)
-  baad <- lapply(csv_files, read.csv, stringsAsFactors=FALSE)
+  baad <- lapply(csv_files, utils::read.csv, stringsAsFactors=FALSE)
   names(baad) <- sub("baad_", "",
                      tools::file_path_sans_ext(basename(csv_files)))
 
