@@ -1,5 +1,5 @@
 Package: baad.data
-Title: Retrieve Data From the 'BAAD'
+Title: Retrieve Data From the 'BAAD' (Biomass And Allometry Database)
 Version: 1.0.1
 Description: Retrieves data from the Biomass And Allometry Database
     ('baad').  This simplifies the task of keeping a consistently
@@ -10,7 +10,9 @@ Depends:
 License: BSD_2_clause + file LICENSE
 LazyData: true
 Author: Daniel Falster, Rich FitzJohn
-Maintainer: Rich FitzJohn <rich.fitzjohn@gmail.com>
+Maintainer: Daniel Falster <daniel.falster@unsw.edu.au>
 Imports: datastorr (>= 0.0.3), bibtex
 Suggests: testthat (>= 1.0.0)
+Remotes:
+    richfitz/datastorr
 RoxygenNote: 5.0.1
